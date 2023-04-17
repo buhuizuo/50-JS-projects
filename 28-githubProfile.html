@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #2a2a72;
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+      }
+      /* input part */
+      .user-form {
+        width: 100%;
+        max-width: 700px;
+      }
+      .form-control {
+        width: 100%;
+        padding: 18px 16px;
+        background-color: #4c2885;
+        border: 0;
+        border-radius: 10px;
+        font-size: 18px;
+        caret-color: #fff;
+        color: #fff;
+      }
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .form-control:focus {
+        outline: 0;
+      }
+      /* user info part */
+      .result {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 1.8rem;
+        border-radius: 20px;
+        background-color: #4c2885;
+        display: none;
+      }
+      .result-content {
+        display: flex;
+        width: 100%;
+        padding: 3.4rem 0 3.8rem 3rem;
+        color: c333;
+      }
+      .result-pic {
+        width: 150px;
+        height: 150px;
+        margin: auto 0;
+        min-width: 130px;
+        border-radius: 50%;
+        border: 10px solid #2a2a72;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+      .result-detail {
+        margin-left: 30px;
+        max-width: 520px;
+        font-size: 14px;
+      }
+      .result-detail h2 {
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+      .result-detail span {
+        margin-right: 66px;
+      }
+      .result-detail span:nth-child(4) {
+        margin-right: 0;
+      }
+      .result-detail span strong {
+        margin-right: 4px;
+      }
+      .result-repos-list {
+        margin-top: 14px;
+      }
+      .result-repos-list li {
+        display: inline-block;
+        margin: 0 4px 6px 0;
+        padding: 4px 6px;
+        background-color: #2a2a72;
+      }
+      .result-repos-list li a {
+        font-size: 12px;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="user-form">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search a Github User"
+      />
+    </form>
+    <div class="result">
+      <div class="result-content">
+        <div class="result-pic"></div>
+        <div class="result-detail">
+          <h2 class="user-name"></h2>
+          <span
+            ><strong class="result-detail-follower"></strong> Followers</span
+          >
+          <span
+            ><strong class="result-detail-following"></strong> Following</span
+          >
+          <span><strong class="result-detail-repos"></strong> Repos</span>
+          <ul class="result-repos-list"></ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      const form = document.querySelector("#user-form");
+      const input = document.querySelector(".form-control");
+      const card = document.querySelector(".result");
+      const userPic = document.querySelector(".result-pic");
+      const userName = document.querySelector(".user-name");
+      const userFollower = document.querySelector(".result-detail-follower");
+      const userFollowing = document.querySelector(".result-detail-following");
+      const userRepos = document.querySelector(".result-detail-repos");
+      const userReposList = document.querySelector(".result-repos-list");
+      const APIURL = "https://api.github.com/users/";
+      //add user info to page
+      const addUser = (userInfo) => {
+        const { login, avatar_url, followers, following, public_repos } =
+          userInfo;
+        console.log(userInfo);
+        card.style.display = "block";
+        userName.innerHTML = login;
+        userPic.style.backgroundImage = `url(${avatar_url})`;
+        userFollower.innerText = followers;
+        userFollowing.innerText = following;
+        userRepos.innerText = public_repos;
+      };
+      //add repos to page
+      const addRepos = (repos) => {
+        repos.forEach((repo) => {
+          userReposList.innerHTML += `<li><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`;
+        });
+      };
+
+      async function getRepos(reposURL) {
+        const config = {
+          headers: {
+            Accept: "application/json",
+          },
+        };
+        const data = await fetch(`${reposURL}`, config);
+        const userRepos = await data.json();
+        addRepos(userRepos);
+        console.log(userRepos);
+      }
+      //get user
+      async function getUser(user) {
+        const config = {
+          headers: {
+            Accept: "application/json",
+          },
+        };
+        const data = await fetch(`${APIURL + user}`, config);
+        const userInfo = await data.json();
+        addUser(userInfo);
+        getRepos(userInfo.repos_url);
+      }
+      //get search value
+      const searchUser = (e) => {
+        e.preventDefault();
+        const user = input.value;
+        if (user) {
+          userReposList.innerHTML = "";
+          getUser(user);
+          input.value = "";
+        }
+      };
+      form.addEventListener("submit", searchUser);
+    </script>
+  </body>
+</html>

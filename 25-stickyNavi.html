@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+      body {
+        display: flex;
+        flex-direction: column;
+         font-family: 'Open Sans', sans-serif;
+      }
+      .header {
+        position: fixed;
+         width: 100%;
+         background-color: #000;
+      }
+      .header-content{
+         max-width: 1200px;
+         margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+        
+      }
+      .header a {
+        color: #fff;
+        transition: color 0.5s ease-out;
+      }
+      .header-title {
+        margin-left: 16px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .header-list li {
+        display: inline-block;
+        margin: 0 15px;
+        font-size: 16px;
+      }
+      .header-list li:hover a,
+      .header-list li:first-child a,
+      .header a:hover,
+      .header.light a:hover {
+        color: red;
+      }
+      .header.light {
+        background-color: #fff;
+       box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+      }
+      .header.light a {
+         color: #000;
+      }
+       .header.light .header-content {
+        height: 50px;
+       }
+      .main {
+        margin-bottom: 20px;
+        height: 100vh;
+        background-image: url("https://images.pexels.com/photos/450035/pexels-photo-450035.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: bottom center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+         color: #fff;
+        z-index: -2;
+      }
+      .main::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+         z-index:-1 ;
+      }
+      .main-welcome {
+        font-size: 46px;
+        font-weight: 600;
+      }
+      .main-text {
+        font-size: 20px;
+      }
+      .content {
+        max-width: 1200px;
+        margin: 0 auto 60px;
+      }
+      .content h3 {
+        margin: 20px 0;
+        font-size: 26px;
+        font-weight:600;
+      }
+      .content p {
+        font-size: 16px;
+        color:#555;
+        letter-spacing: 1.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="header">
+            <div class="header-content">
+                <strong class="header-title"><a href="#">My Website</a></strong>
+                <ul class="header-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+         </div>
+    </nav>
+   
+    <div class="main">
+        <strong class="main-welcome">Welcome To My Website</strong>
+        <p class="main-text">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores,
+          consequuntur?
+        </p>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-one">
+        <h3>Content One</h3>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione
+          dolorem voluptates eveniet tempora ut cupiditate magnam, sapiente, hic
+          quo in ipsum iste soluta eaque perferendis nihil recusandae dolore
+          officia aperiam corporis similique. Facilis quos tempore labore totam!
+          Consectetur molestiae iusto ducimus error reiciendis aspernatur dolor,
+          modi dolorem sit architecto, voluptate magni sunt unde est quas?
+          Voluptates a dolorum voluptatum quo perferendis aut sit. Aspernatur
+          libero laboriosam ab eligendi omnis delectus earum labore, placeat
+          officiis sint illum rem voluptas ipsum repellendus iste eius
+          recusandae quae excepturi facere, iure rerum sequi? Illum velit
+          delectus dicta et iste dolorum obcaecati minus odio eligendi!
+        </p>
+      </div>
+      <div class="content-two">
+        <h3>Content Two</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
+          provident nostrum possimus inventore nisi laboriosam consequatur modi
+          nulla eos, commodi, omnis distinctio! Maxime distinctio impedit
+          provident, voluptates illo odio nostrum minima beatae similique a sint
+          sapiente voluptatum atque optio illum est! Tenetur tempora doloremque
+          quae iste aperiam hic cumque repellat?
+        </p>
+      </div>
+    </div>
+    <script>
+        const header = document.querySelector(".header");
+        window.addEventListener("scroll", () =>{
+            if(window.scrollY >header.offsetHeight+100){
+               header.classList.add("light")
+            }else{
+                header.classList.remove("light")
+            }
+        })
+    </script>
+  </body>
+</html>

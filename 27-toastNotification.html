@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+      body {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rebeccapurple;
+      }
+      .btn {
+        padding: 16px;
+        border: 0;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        color: rebeccapurple;
+      }
+      .message {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+      }
+      .message-content {
+        margin-bottom: 10px;
+        padding: 1rem 2.4rem;
+        border-radius: 5px;
+        font-size: 18px;
+        background-color: #fff;
+      }
+      .message-content.red {
+        color: orangered;
+      }
+      .message-content.green {
+        color: green;
+      }
+      .message-content.purple {
+        color: rebeccapurple;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="message"></div>
+    <button class="btn">Show Notifications</button>
+    <script>
+      const btn = document.querySelector(".btn");
+      const messageBox = document.querySelector(".message");
+
+      const color = ["red", "green", "purple"];
+      const messages = [
+        "message one",
+        "message two",
+        "message three",
+        "message four",
+      ];
+
+      const getMsg = () => {
+        return messages[Math.floor(Math.random() * messages.length)];
+      };
+      const getColor = () => {
+        return color[Math.floor(Math.random() * color.length)];
+      };
+      const getNewMsg = () => {
+        const newMsg = document.createElement("div");
+        newMsg.classList.add(`message-content`);
+        newMsg.classList.add(`${getColor()}`);
+        newMsg.innerText = getMsg();
+        messageBox.appendChild(newMsg);
+        setTimeout(() => messageBox.removeChild(newMsg), 3000);
+      };
+      btn.addEventListener("click", getNewMsg);
+    </script>
+  </body>
+</html>

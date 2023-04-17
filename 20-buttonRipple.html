@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #000;
+      }  
+      .btn {
+        position: relative;
+        padding: 20px 30px;
+        border: 0;
+        color: #fff;
+        background-color: purple;
+        font-size:14px;
+        text-transform: uppercase;
+        word-spacing: 2px;
+        overflow: hidden;
+      }
+      .circle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background-color: #fff;
+        border-radius: 50%;
+        transform:translate(-50%, -50%) scale(0);
+        animation: scale .5s ease-out;
+      }
+      @keyframes scale {
+        to{
+           transform:translate(-50%, -50%) scale(3); 
+           opacity: 0;
+        }
+      }
+    </style>
+<body>
+    <button class="btn">Click me <div class="circle"></div></button>
+<script>
+    const btn=document.querySelector(".btn");
+    btn.addEventListener("click",(e)=>{
+       const mouseX=e.pageX;
+       const mouseY=e.pageY;
+       const btnX=e.target.offsetLeft;
+       const btnY=e.target.offsetTop;
+
+       const btnPositionLeft=mouseX-btnX;
+       const btnPositionTop=mouseY-btnY;
+
+       const circle=document.createElement("div");
+       circle.classList.add("circle");
+       circle.style.top=btnPositionTop+"px";
+       circle.style.left=btnPositionLeft+"px";
+       btn.appendChild(circle)
+
+       setTimeout(()=>circle.remove(),500)
+    })
+</script>
+</body>
+</html>

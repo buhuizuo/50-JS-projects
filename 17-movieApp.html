@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap");
+
+      :root {
+        --primary-color: #22254b;
+        --secondary-color: #373b69;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      /* header part */
+      header {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1.5em;
+        background-color: var(--secondary-color);
+      }
+      .search {
+        padding: 0.5rem 1rem;
+        border: none;
+        border: 2px solid var(--primary-color);
+        border-radius: 15px;
+        outline: 0;
+        background-color: transparent;
+        color: white;
+      }
+      .search::placeholder {
+        font-size: 16px;
+        color: #7378c5;
+      }
+      .search:focus {
+        background-color: var(--primary-color);
+      }
+      /* movie part */
+      .main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* height: 100vh; */
+        background-color: var(--primary-color);
+        overflow: hidden;
+      }
+      .movie {
+        position: relative;
+        margin: 1.5rem;
+        width: 300px;
+        background-color: var(--secondary-color);
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+      .movie img {
+        width: 100%;
+      }
+      .movie-detail {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+      }
+      .movie-title {
+        padding-bottom: 20px;
+        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .movie-rate {
+        padding: 0.4rem;
+        background-color: var(--primary-color);
+        font-size: 16px;
+      }
+      .movie-rate.red {
+        color: red;
+      }
+      .movie-rate.orange {
+        color: orange;
+      }
+      .movie-rate.green {
+        color: lightgreen;
+      }
+      .overview {
+        padding: 4rem 3rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-height: 100%;
+        transform: translateY(101%);
+        overflow-y: auto;
+        background-color: #fff;
+        transition: transform 0.5s ease;
+      }
+      .overview-title {
+        padding-bottom: 1.5rem;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .overview-description {
+        word-wrap: break-word;
+        font-size: 16px;
+      }
+      .movie:hover .overview {
+        transform: translateY(0%);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <form id="form">
+        <input type="text" id="search" class="search" placeholder="Search" />
+      </form>
+    </header>
+    <main class="main"></main>
+    <script>
+      const API_URL =
+        "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1";
+      const IMG_PATH = "https://image.tmdb.org/t/p/w1280";
+      const SEARCH_API =
+        'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="';
+
+      const main = document.querySelector(".main");
+      const form = document.querySelector("#form");
+      const search = document.querySelector("#search");
+
+      async function getMovies(url) {
+        const res = await fetch(url);
+        const data = await res.json();
+        showMovie(data.results);
+      }
+
+      function showMovie(movies) {
+        main.innerHTML = "";
+        movies.forEach((movie) => {
+          const { poster_path, title, vote_average, overview } = movie;
+          const div = document.createElement("div");
+          div.classList.add("movie");
+          div.innerHTML = `  <img src="${
+            IMG_PATH + poster_path
+          }" alt="${title}" />
+        <div class="movie-detail">
+          <h3 class="movie-title">${title}</h3>
+          <span class="movie-rate ${getColor(
+            vote_average
+          )}">${vote_average}</span>
+        </div>
+        <div class="overview">
+          <h3 class="overview-title">Overview</h3>
+          <p class="overview-description">
+            ${overview}
+          </p>
+        </div>`;
+          main.appendChild(div);
+        });
+      }
+
+      const getColor = (vote_average) => {
+        if (vote_average >= 8) {
+          return "green";
+        } else if (vote_average >= 6) {
+          return "orange";
+        } else {
+          return "red";
+        }
+      };
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const keyword = search.value;
+        if (keyword !== "") {
+          getMovies(SEARCH_API + keyword);
+          search.value = "";
+        } else {
+          //   getMovies(API_URL);
+          window.location.reload();
+        }
+      });
+      getMovies(API_URL);
+    </script>
+  </body>
+</html>

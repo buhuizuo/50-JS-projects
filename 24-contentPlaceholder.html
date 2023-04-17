@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        background-color: #ecf0f1;
+      }
+      .card {
+        width: 350px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        background-color: #fff;
+      }
+      .card-header {
+        height: 200px;
+      }
+      .card-header img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+      }
+      .card-content {
+        margin: 25px 30px;
+      }
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .card-discrition {
+        font-size: 16px;
+        color: #333;
+      }
+      .card-author {
+        margin-top: 20px;
+        display: flex;
+        justify-content: start;
+      }
+      .author-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .author-img img {
+        height: 100%;
+      }
+      .author-discrition {
+        margin-left: 15px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      .author-info {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .author-date {
+        font-size: 12px;
+        color: #bbb;
+      }
+      .holding-bg {
+        background-image: linear-gradient(
+          to right,
+          #f6f7f8 0%,
+          #edeef1 10%,
+          #f6f7f8 20%,
+          #f6f7f8 100%
+        );
+        background-size: 200%;
+        animation: bgMove 1s linear infinite;
+      }
+      .holding-text {
+        border-radius: 50px;
+        display: inline-block;
+        height: 10px;
+        width: 100%;
+      }
+      @keyframes bgMove {
+        0% {
+          background-position: 50%;
+        }
+        100% {
+          background-position: -150%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-header holding-bg"></div>
+      <div class="card-content">
+        <h3 class="card-title holding-bg holding-text"></h3>
+        <p class="card-discrition">
+          <span class="holding-bg holding-text">&nbsp; </span>
+          <span class="holding-bg holding-text">&nbsp; </span>
+          <span class="holding-bg holding-text">&nbsp; </span>
+        </p>
+        <div class="card-author">
+          <div class="author-img holding-bg"></div>
+          <p class="author-discrition">
+            <span class="author-info holding-bg holding-text">&nbsp; </span>
+            <span class="author-date holding-bg holding-text">&nbsp; </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const headerImg = document.querySelector(".card-header");
+      const title = document.querySelector(".card-title");
+      const discrition = document.querySelector(".card-discrition");
+      const authorImg = document.querySelector(".author-img");
+      const authorInfo = document.querySelector(".author-info");
+      const authorDate = document.querySelector(".author-date");
+      const removeClass = () => {
+        const holdingBGs = document.querySelectorAll(".holding-bg");
+        const holdingTexts = document.querySelectorAll(".holding-text");
+        holdingBGs.forEach((bg) => bg.classList.remove("holding-bg"));
+        holdingTexts.forEach((text) => text.classList.remove("holding-text"));
+      };
+      const getInfo = () => {
+        removeClass();
+        headerImg.innerHTML =
+          '<img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2102&q=80" alt="" />';
+        title.innerHTML = `Lorem ipsum dolor sit amet`;
+        discrition.innerHTML =
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore perferendis";
+        authorImg.innerHTML =
+          '<img src="https://randomuser.me/api/portraits/men/45.jpg" alt="" />';
+        authorInfo.innerHTML = "<span class='author-info'>John Doe</span>";
+        authorDate.innerHTML = "<span class='author-date'>Oct 08, 2020</span>";
+      };
+
+      setTimeout(getInfo, 1500);
+    </script>
+  </body>
+</html>

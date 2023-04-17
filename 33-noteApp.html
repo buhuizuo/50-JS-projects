@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        padding: 1em;
+        background-color: #7bdaf3;
+      }
+      .btn-add {
+        position: fixed;
+        top: 1em;
+        right: 1em;
+        padding: 8px 18px;
+        border-radius: 4px;
+        background-color: #9ec862;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .fa-plus {
+        margin-right: 4px;
+      }
+      .note-container {
+        margin: 60px 20px;
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+      }
+      .note {
+        margin-right: 40px;
+        margin-bottom: 80px;
+        width: 400px;
+        height: 400px;
+        box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+      }
+      .note-tools {
+        display: flex;
+        justify-content: flex-end;
+        background-color: #9ec862;
+      }
+      .edit,
+      .delete {
+        padding: 12px;
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+      .fa-edit,
+      .fa-trash-alt {
+        color: #fff;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0);
+      }
+
+      .textarea {
+        padding: 20px;
+        width: 100%;
+        height: 400px;
+        overflow: scroll;
+        font-size: 1.2rem;
+        border: 0;
+      }
+      .main {
+        margin: 20px;
+        width: 100%;
+        height: 90%;
+        font-size: 1.2rem;
+        color: navy;
+      }
+      .main.hidden {
+        display: none;
+      }
+      .textarea.hidden {
+        display: none;
+      }
+      .textarea:focus {
+        outline: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="btn-add"><i class="fas fa-plus"></i>Add note</button>
+    <div class="note-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.2.2/marked.min.js"></script>
+    <script>
+      const btnAdd = document.querySelector(".btn-add");
+      const container = document.querySelector(".note-container");
+      const storedNotes = JSON.parse(localStorage.getItem("notes"));
+
+      const createNote = (text = "") => {
+        //new a note, from click button
+        const note = document.createElement("div");
+        note.classList.add("note");
+        note.innerHTML = `<div class="note-tools">
+          <button class="edit"><i class="fas fa-edit"></i></button>
+          <button class="delete"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="main ${text ? "" : "hidden"}">${marked(text)}</div>
+        <textarea class="textarea ${
+          text ? "hidden" : ""
+        }" cols="30" rows="10">${text}</textarea>
+     `;
+        container.appendChild(note);
+
+        const editNote = note.querySelector(".edit");
+        const deleteNote = note.querySelector(".delete");
+        const noteDiv = note.querySelector(".main");
+        const noteTextarea = note.querySelector(".textarea");
+
+        editNote.addEventListener("click", () => {
+          noteDiv.classList.toggle("hidden");
+          noteTextarea.classList.toggle("hidden");
+        });
+
+        deleteNote.addEventListener("click", () => {
+          note.remove();
+          updateLS();
+        });
+
+        noteTextarea.addEventListener("input", (e) => {
+          const { value } = e.target;
+          noteDiv.innerHTML = marked(value);
+          updateLS();
+        });
+      };
+
+      if (storedNotes) {
+        storedNotes.forEach((note) => createNote(note));
+      }
+
+      const updateLS = () => {
+        const allTextarea = document.querySelectorAll("textarea");
+        let noteArr = [];
+        allTextarea.forEach((text) => {
+          noteArr.push(text.value);
+        });
+        localStorage.setItem("notes", JSON.stringify(noteArr));
+      };
+
+      btnAdd.addEventListener("click", () => createNote());
+    </script>
+  </body>
+</html>

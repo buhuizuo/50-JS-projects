@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: "Lato", sans-serif;
+        background: linear-gradient(to right, #d4d3dd, #efefbb);
+      }
+      h1 {
+        margin: 30px auto;
+        font-size: 32px;
+        font-weight: bold;
+      }
+
+      .poke-container {
+        max-width: 1200px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .poke-card {
+        margin: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 12px;
+        box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
+        background-color: #efefbb;
+      }
+      .img-container {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      .poke-card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+      }
+
+      .poke-num {
+        margin-top: 18px;
+        padding: 4px 12px;
+        display: block;
+        border-radius: 12px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      .Poke-name {
+        margin: 8px 0 2px 0;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pokedex</h1>
+    <div class="poke-container"></div>
+    <script>
+      const container = document.querySelector(".poke-container");
+      const totalPokemon = 100;
+      const colors = {
+        fire: "#FDDFDF",
+        grass: "#DEFDE0",
+        electric: "#FCF7DE",
+        water: "#DEF3FD",
+        ground: "#f4e7da",
+        rock: "#d5d5d4",
+        fairy: "#fceaff",
+        poison: "#98d7a5",
+        bug: "#f8d5a3",
+        dragon: "#97b3e6",
+        psychic: "#eaeda1",
+        flying: "#F5F5F5",
+        fighting: "#E6E0D4",
+        normal: "#F5F5F5",
+      };
+      //fetch data
+      const getTotalPokemon = () => {
+        for (let i = 1; i <= totalPokemon; i++) {
+          getPokemon(i);
+        }
+      };
+
+      const getPokemon = async (id) => {
+        let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        let data = await res.json();
+        console.log(data);
+        createPokemon(data);
+      };
+
+      const createPokemon = (data) => {
+        const { name, id, types, sprites } = data;
+        cardDiv = document.createElement("div");
+        cardDiv.classList.add("poke-card");
+        cardDiv.style.backgroundColor = `${colors[types[0].type.name]}`;
+
+        cardDiv.innerHTML = `
+        <div class="img-container">
+        <img src="${sprites.front_default}" alt="poke-pic" />
+           </div>
+        <span class="poke-num">#${id.toString().padStart(3, "0")}</span>
+        <h3 class="Poke-name">${
+          name.charAt(0).toUpperCase() + name.slice(1)
+        }</h3>
+        <div class="poke-type"><span>Tpye: </span><span>${
+          types[0].type.name
+        }</span></div>
+      </div>`;
+        container.appendChild(cardDiv);
+      };
+      getTotalPokemon();
+    </script>
+  </body>
+</html>

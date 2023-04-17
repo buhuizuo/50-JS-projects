@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        height: 530px;
+        width: 500px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+      }
+      .pics {
+        display: flex;
+        transition: transform 0.5s linear;
+      }
+      .pics img {
+        display: inline-block;
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+      }
+      .btnContainer {
+        display: flex;
+        justify-content: space-between;
+      }
+      button {
+        width: 245px;
+        height: 30px;
+        border: 0;
+        background-color: rebeccapurple;
+        color: #fff;
+      }
+      button:hover {
+        background-color: rgb(114, 81, 148);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="pics">
+        <img
+          src="https://images.unsplash.com/photo-1599394022918-6c2776530abb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1458&q=80"
+          alt="first-image"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+          alt="second-image"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1599423300746-b62533397364?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+          alt="third-image"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1599561046251-bfb9465b4c44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1492&q=80"
+          alt="fourth-image"
+        />
+      </div>
+      <div class="btnContainer">
+        <button class="prev">Prev</button>
+        <button class="next">Next</button>
+      </div>
+      <script>
+        const allPics = document.querySelector(".pics");
+        const picTotalNum = document.querySelectorAll("img");
+        const picWidth = picTotalNum[0].offsetWidth;
+        const prev = document.querySelector(".prev");
+        const next = document.querySelector(".next");
+        let count = 1;
+
+        const picMove = () => {
+          //if next last one
+          count >= picTotalNum.length ? (count = 0) : count;
+          //if prev first one
+          count < 0 ? (count = picTotalNum.length - 1) : count;
+          allPics.style.transform = `translateX(-${count * picWidth}px)`;
+          count++;
+        };
+        setInterval(picMove, 3000);
+        prev.addEventListener("click", () => {
+          count -= 2;
+          picMove();
+        });
+        next.addEventListener("click", () => {
+          picMove();
+        });
+      </script>
+    </div>
+  </body>
+</html>

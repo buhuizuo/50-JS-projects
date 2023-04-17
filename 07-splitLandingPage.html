@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+      body {
+        height: 100vh;
+      }
+      .container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        background-color: gray;
+      }
+      .left,
+      .right {
+        width: 50%;
+        height: 100%;
+        text-align: center;
+        padding-top: 30%;
+        background-color: goldenrod;
+        transition: width 800ms ease-in-out;
+      }
+      .left:hover,
+      .right:hover {
+        width: 85%;
+      }
+      .right {
+        background-color: darkorange;
+      }
+      .title {
+        font-size: 50px;
+        color: #fff;
+      }
+      .btn {
+        padding: 20px 50px;
+        background-color: rgba(240, 248, 255, 0);
+        border: 3px solid floralwhite;
+        font-size: 16px;
+        color: #fff;
+      }
+      .btn:hover {
+        background-color: orange;
+        border-color: orange;
+      }
+      .btn.btnR:hover {
+        background-color: goldenrod;
+        border-color: goldenrod;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <h1 class="title">HaHa</h1>
+        <button class="btn btnL">click me</button>
+      </div>
+      <div class="right">
+        <h1 class="title">HeHe</h1>
+        <button class="btn btnR">click me</button>
+      </div>
+    </div>
+  </body>
+</html>

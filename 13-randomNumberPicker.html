@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>random!</title>
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        background-color: #2b88f0;
+        color: white;
+      }
+      .container {
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+      }
+      .header {
+        margin: 45px 80px 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      textarea {
+        height: 100px;
+        padding: 10px;
+        border: 0;
+      }
+      textarea:focus {
+        outline: none;
+      }
+      .tag {
+        margin: 20px 5px 0 0;
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: orange;
+        border-radius: 50px;
+      }
+      .tag.highlight {
+        background-color: #273c75;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h4 class="header">
+        Enter all of the choices divided by a comma (','). Press enter when
+        you're done
+      </h4>
+      <textarea placeholder="Enter choice here..."></textarea>
+      <ul class="tags"></ul>
+    </div>
+    <script>
+      const textInput = document.querySelector("textarea");
+      const ul = document.querySelector("ul");
+      let needNewLi = true;
+
+      const addNewLi = (value) => {
+        const newLi = document.createElement("li");
+        newLi.classList.add("tag");
+        newLi.innerText = value;
+        ul.appendChild(newLi);
+      };
+
+      const updateOption = () => {
+        const inputArray = textInput.value.split(",").filter((el) => el);
+        ul.innerHTML = "";
+        inputArray.forEach((input) => {
+          addNewLi(input);
+        });
+      };
+
+      textInput.addEventListener("keyup", (e) => {
+        if (e.key === ",") {
+          needNewLi = true;
+        } else if (e.key === "Enter") {
+          const lis = document.querySelectorAll("li");
+          if (lis.length !== 0) {
+            let count = 0;
+            const randomTime = setInterval(() => {
+              count++;
+              const ranNum = Math.floor(Math.random() * lis.length);
+              lis.forEach((li) => li.classList.remove("highlight"));
+              lis[ranNum].classList.add("highlight");
+              if (count >= 30) clearInterval(randomTime);
+            }, 100);
+          }
+        } else if (e.key === "Backspace") {
+          updateOption();
+        } else if (needNewLi) {
+          addNewLi(e.key);
+          needNewLi = false;
+        } else {
+          updateOption();
+        }
+      });
+    </script>
+  </body>
+</html>

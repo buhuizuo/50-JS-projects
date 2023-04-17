@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 100vh;
+      }
+      .container {
+        position: relative;
+        display: flex;
+        height: 100vh;
+        /* width: 100%;*/
+        overflow: hidden;
+      }
+      .left {
+        flex: 1.1;
+      }
+      .right {
+        flex: 2;
+      }
+      .right div,
+      .left div {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        color: white;
+      }
+      .left,
+      .right {
+        transform: translateY(0);
+        transition: transform 1s ease;
+      }
+      .right {
+        transform: translateY(-300%);
+      }
+      .left h1 {
+        font-size: 40px;
+        font-weight: 600;
+      }
+      .btn-down,
+      .btn-up {
+        position: absolute;
+        top: 50%;
+        left: 32.3%;
+        padding: 16px;
+        border: 0;
+        border-bottom-left-radius: 6px;
+        border-top-left-radius: 6px;
+        font-size: 16px;
+        color: #aaa;
+        cursor: pointer;
+      }
+      .btn-up {
+        top: 59%;
+        left: 35.5%;
+        border-radius: 0;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+      .btn-down:hover,
+      .btn-up:hover {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left">
+        <div style="background-color: #fd3555">
+          <h1>Nature flower</h1>
+          <p>all in pink</p>
+        </div>
+        <div style="background-color: #2a86ba">
+          <h1>Bluuue Sky</h1>
+          <p>with it's mountains</p>
+        </div>
+        <div style="background-color: #252e33">
+          <h1>Lonely castle</h1>
+          <p>in the wilderness</p>
+        </div>
+        <div style="background-color: #ffb866">
+          <h1>Flying eagle</h1>
+          <p>in the sunset</p>
+        </div>
+      </div>
+      <div class="right">
+        <div
+          style="
+            background-image: url('https://images.unsplash.com/photo-1508768787810-6adc1f613514?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e27f6661df21ed17ab5355b28af8df4e&auto=format&fit=crop&w=1350&q=80');
+          "
+        ></div>
+        <div
+          style="
+            background-image: url('https://images.unsplash.com/photo-1519981593452-666cf05569a9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=90ed8055f06493290dad8da9584a13f7&auto=format&fit=crop&w=715&q=80');
+          "
+        ></div>
+        <div
+          style="
+            background-image: url('https://images.unsplash.com/photo-1486899430790-61dbf6f6d98b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8ecdee5d1b3ed78ff16053b0227874a2&auto=format&fit=crop&w=1002&q=80');
+          "
+        ></div>
+        <div
+          style="
+            background-image: url('https://images.unsplash.com/photo-1510942201312-84e7962f6dbb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da4ca7a78004349f1b63f257e50e4360&auto=format&fit=crop&w=1050&q=80');
+          "
+        ></div>
+      </div>
+      <button class="btn-down"><i class="fas fa-arrow-down"></i></button>
+      <button class="btn-up"><i class="fas fa-arrow-up"></i></button>
+      <script>
+        const upBtn = document.querySelector(".btn-up");
+        const downBtn = document.querySelector(".btn-down");
+        const left = document.querySelector(".left");
+        const right = document.querySelector(".right");
+        const length = document.querySelectorAll(".right div").length;
+        let count = 1;
+
+        downBtn.addEventListener("click", () => {
+          if (count === 4) {
+            count = 0;
+          }
+          left.style.transform = `translateY(-${count * 100}%)`;
+          right.style.transform = `translateY(-${(length - count - 1) * 100}%)`;
+          count++;
+        });
+        upBtn.addEventListener("click", () => {
+          count--;
+          if (count < 1) {
+            count = 4;
+          }
+          left.style.transform = `translateY(-${(count - 1) * 100}%)`;
+          right.style.transform = `translateY(-${(length - count) * 100}%)`;
+        });
+      </script>
+    </div>
+  </body>
+</html>

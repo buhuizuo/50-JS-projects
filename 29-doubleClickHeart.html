@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        font-family: "Oswald", sans-serif;
+        overflow: hidden;
+      }
+      .container {
+        margin-top: 26px;
+        text-align: center;
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .count {
+        font-style: normal;
+      }
+      .fa-heart {
+        color: firebrick;
+      }
+      .pic {
+        position: relative;
+        margin-top: 26px;
+        width: 300px;
+        height: 440px;
+        background: url("https://images.unsplash.com/photo-1504215680853-026ed2a45def?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80")
+          no-repeat center center/cover;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+          0 10px 10px rgba(0, 0, 0, 0.22);
+      }
+
+      .pic .fa-heart {
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: bigger 0.8s ease;
+      }
+      @keyframes bigger {
+        to {
+          transform: translate(-50%, -50%) scale(10);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">
+        Double click on the image to <i class="fas fa-heart"></i> it
+      </h1>
+      <span>You liked it <i class="count">0</i> times</span>
+      <div class="pic"></div>
+    </div>
+    <script>
+      const heartCount = document.querySelector(".count");
+      const pic = document.querySelector(".pic");
+      let count = 0;
+
+      pic.addEventListener("dblclick", (e) => {
+        count++;
+        heartCount.innerHTML = count;
+
+        const heart = document.createElement("i");
+        heart.classList.add("fas");
+        heart.classList.add("fa-heart");
+        const x = e.clientX - e.target.offsetLeft;
+        const y = e.clientY - e.target.offsetTop;
+        heart.style.top = `${y}px`;
+        heart.style.left = `${x}px`;
+
+        pic.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 700);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Muli&display=swap");
+      body {
+        font-family: "Muli", sans-serif;
+        background-color: #f0f0f0;
+      }
+      .container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+      }
+      .container .title {
+        margin: 50px 0 30px;
+        font-weight: 600;
+        font-size: 32px;
+      }
+      .container .content li {
+        position: relative;
+        width: 90vw;
+        max-width: 600px;
+        margin-bottom: 25px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0;
+      }
+      .container .content li.active::before,
+      .container .content li.active::after {
+        content: "\f075";
+        font-family: "Font Awesome 5 Free";
+        color: #2ecc71;
+        font-size: 7rem;
+        position: absolute;
+        opacity: 0.2;
+        top: 15px;
+        left: 10px;
+        z-index: 0;
+      }
+      .container .content li.active::after {
+        color: #3498db;
+        top: -10px;
+        left: 30px;
+        transform: rotateY(180deg);
+      }
+      .container .content li.active {
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      }
+      .container .content li.active .answer {
+        display: block;
+      }
+      .container .content li .question {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 20px 20px;
+      }
+      .container .content li .answer {
+        margin: 35px 20px 20px;
+        display: none;
+      }
+      .container .content li .btn {
+        position: absolute;
+        top: 25px;
+        right: 0;
+        margin-right: 30px;
+        background-color: rgba(255, 255, 255, 0);
+        border: 0;
+      }
+      .container .content li .btn .arrow {
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid #000;
+        border-bottom: 2px solid #000;
+        transform: rotate(45deg);
+      }
+      .container .content li .btn .close {
+        position: absolute;
+        top: 0;
+        right: -5px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        background-color: lightgray;
+        border-radius: 13px;
+        color: white;
+        display: none;
+      }
+      .container .content li.active .arrow {
+        display: none;
+      }
+      .container .content li.active .close {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Frequently Asked Questions</h1>
+      <ul class="content">
+        <li>
+          <h4 class="question">Why shouldn't we trust atoms?</h4>
+          <p class="answer">They make up everything</p>
+
+          <button class="btn">
+            <div class="arrow"></div>
+            <div class="close">x</div>
+          </button>
+        </li>
+        <li>
+          <h4 class="question">Why shouldn't we trust atoms?</h4>
+          <p class="answer">They make up everything</p>
+
+          <button class="btn">
+            <div class="arrow"></div>
+            <div class="close">x</div>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <script>
+      const btns = document.querySelectorAll(".btn");
+      console.log(btns[0].parentNode);
+      btns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          btn.parentNode.classList.toggle("active");
+        });
+      });
+      //   const dropdowns = document.querySelectorAll(".arrow");
+      //   const closes = document.querySelectorAll(".close");
+      //   const lis = document.querySelectorAll("li");
+      //   const answers = document.querySelectorAll(".answer");
+      //   const showAnswer = (arrow, i) => {
+      //     arrow.addEventListener("click", () => {
+      //       arrow.classList.remove("active");
+      //       closes[i].classList.add("active");
+      //       lis[i].classList.add("active");
+      //       answers[i].classList.add("active");
+      //     });
+      //   };
+      //   const closeAnswer = (close, i) => {
+      //     close.addEventListener("click", () => {
+      //       close.classList.remove("active");
+      //       dropdowns[i].classList.add("active");
+      //       lis[i].classList.remove("active");
+      //       answers[i].classList.remove("active");
+      //     });
+      //   };
+      //   dropdowns.forEach(showAnswer);
+      //   closes.forEach(closeAnswer);
+    </script>
+  </body>
+</html>

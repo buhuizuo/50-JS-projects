@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./global.css"></link>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: gray;
+      }
+      /* ball on top left */
+      .navBall {
+        position: fixed;
+        top: -80px;
+        left: -80px;
+        width: 160px;
+        height: 160px;
+        background-color: salmon;
+        border-radius: 50%;
+        font-size: 24px;
+        color: #fff;
+        z-index: 1;
+        transform: rotate(0deg);
+        transition: transform 600ms ease-in;
+      }
+      .sanwich {
+        position: relative;
+        top: 60%;
+        left: 65%;
+      }
+      .x {
+        position: relative;
+        top: 43%;
+        left: 30%;
+      }
+      /* content */
+      .navContent {
+        margin: -20px auto 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        transform-origin: top left;
+        transform: rotate(0deg);
+        background-color: #fff;
+        transition: transform 600ms ease-in;
+      }
+      .navContent h1 {
+        margin: 100px 0 50px;
+        font-size: 24px;
+      }
+      .navContent p {
+        padding: 0 50px;
+      }
+      .list {
+        position: absolute;
+        bottom: 5%;
+        left: 14px;
+      }
+      .list ul li {
+        padding-bottom: 5px;
+        color: #fff;
+        transform: translateX(-65px);
+        transition: transform 600ms ease-in;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navBall">
+      <div class="sanwich">a</div>
+      <div class="x">x</div>
+    </div>
+    <div class="navContent">
+      <h1>this is article</h1>
+      <p>
+        aaaaaaaaaaa aaaaaaaa aaaaaaaa
+        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaa
+        aaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaaaaaaaaaa aaaaaaaa aaaaaaaa aaaaaaaa
+        aaaaaaaa aaaaaaaa
+      </p>
+    </div>
+    <div class="list">
+      <ul>
+        <li><a>Home</a></li>
+        <li><a>More</a></li>
+        <li><a>Contact</a></li>
+      </ul>
+    </div>
+    <script>
+      let ballNo = 0;
+      let orangeBall = document.querySelector(".navBall");
+      let content = document.querySelector(".navContent");
+      let navList = document.querySelectorAll(".list ul li")
+
+      orangeBall.addEventListener("click", () => {
+        if (ballNo === 0) {
+          orangeBall.style.transform = "rotate(-90deg)";
+          content.style.transform = "rotate(-20deg)";
+          navList.forEach(list => {
+           list.style.transform = "translateX(0px)"
+          })
+          ballNo++;
+        } else {
+          orangeBall.style.transform = "rotate(0deg)";
+          content.style.transform = "rotate(0deg)";
+           navList.forEach(list => {
+           list.style.transform = "translateX(-65px)"
+          })
+          ballNo--;
+        }
+      });
+    </script>
+  </body>
+</html>

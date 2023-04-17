@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drink!</title>
+    <link rel="stylesheet" href="./global.css" />
+    <style>
+      :root {
+        --blue: rgb(0, 89, 255);
+      }
+      body {
+        box-sizing: border-box;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: system-ui;
+        text-align: center;
+        background-color: lightseagreen;
+        color: white;
+      }
+      .container .total {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .container h1 {
+        font-size: 34px;
+        font-weight: 600;
+      }
+      .container span {
+        font-size: 20px;
+        font-weight: 200;
+      }
+      .big-bottle h4 {
+        font-size: 20px;
+      }
+      .total {
+        color: var(--blue);
+      }
+      .done .done-num {
+        font-size: 30px;
+        font-weight: 600;
+      }
+      .big-bottle {
+        margin: 30px 0;
+        width: 150px;
+        height: 330px;
+        border: 4px solid var(--blue);
+        border-bottom-left-radius: 35px;
+        border-bottom-right-radius: 35px;
+        overflow: hidden;
+      }
+      .remained,
+      .done,
+      .small {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .remained {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        transition: height 0.3s ease;
+      }
+      .done {
+        height: 0%;
+        background-color: lightblue;
+        transition: height 0.3s ease;
+      }
+      .small p {
+        font-size: 18px;
+      }
+      .small .small-bottles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        width: 280px;
+        color: var(--blue);
+      }
+      .small .small-bottles li {
+        display: inline-block;
+        width: 46px;
+        height: 95px;
+        margin: 5px;
+        border: 4px solid var(--blue);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        line-height: 95px;
+        font-size: 14px;
+        background-color: #fff;
+        cursor: pointer;
+      }
+      .small .small-bottles .full {
+        background-color: lightblue;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Drink Water</h1>
+      <span>Goal: 2 Liters</span>
+      <div class="total">
+        <div class="big-bottle">
+          <div class="remained">
+            <h4 class="total-num">2L</h4>
+            <p>Remained</p>
+          </div>
+          <div class="done">
+            <h2 class="done-num"></h2>
+          </div>
+        </div>
+      </div>
+      <div class="small">
+        <p>Select how many glasses of water that you have drank</p>
+        <ul class="small-bottles">
+          <li>250 ml</li>
+          <li>250 ml</li>
+          <li>250 ml</li>
+          <li>250 ml</li>
+          <li>250 ml</li>
+          <li>250 ml</li>
+          <li>250 ml</li>
+          <li>250 ml</li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      const smallBottles = document.querySelectorAll(".small-bottles li");
+      const remainedL = document.querySelector(".total-num");
+      const donePercentageDisplay = document.querySelector(".done-num");
+      const bigBottle = document.querySelector(".remained");
+      const remainText = document.querySelector(".remained p");
+      const doneBlueBar = document.querySelector(".done");
+      //small bottle control
+      const updateSmallBottles = (index) => {
+        smallBottles.forEach((bottle, i) => {
+          bottle.classList.remove("full");
+          if (i <= index) {
+            bottle.classList.add("full");
+          }
+        });
+        percentCal(index);
+      };
+      //big bottle display control
+      const percentCal = (index) => {
+        //formular
+        let currentValue = (index + 1) * 250;
+        let donePercentage = (currentValue / 2000) * 100;
+        //value changes
+        remainText.innerText = "Remained";
+        remainedL.innerText = `${2 - currentValue / 1000}L`;
+        donePercentageDisplay.innerText = `${donePercentage}%`;
+        bigBottle.style.height = `${100 - donePercentage}%`;
+        doneBlueBar.style.height = `${donePercentage}%`;
+        visibleControl(donePercentage);
+      };
+      //visible control;
+      const visibleControl = (donePercentage) => {
+        donePercentage === 100
+          ? ((remainText.innerText = ""), (remainedL.innerText = ""))
+          : "";
+        donePercentage === 0 ? (donePercentageDisplay.innerText = "") : "";
+      };
+      //small bottle event
+      smallBottles.forEach((bottle, index) => {
+        bottle.addEventListener("click", () => {
+          if (bottle.classList.contains("full")) {
+            const fullCount = document.querySelectorAll(".full").length;
+            if (fullCount > index + 1) {
+              updateSmallBottles(index);
+            } else {
+              bottle.classList.remove("full");
+              percentCal(index - 1);
+            }
+          } else {
+            updateSmallBottles(index);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

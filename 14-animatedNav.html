@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Animated Navigation</title>
+  </head>
+  <style>
+    body {
+      height: 100vh;
+      background-image: linear-gradient(
+        to bottom,
+        #eafbff 0%,
+        #eafbff 50%,
+        #5290f9 50%,
+        #5290f9 100%
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    nav ul li a,
+    nav ul li a:link:active,
+    nav ul li a:visited:active {
+      color: #000;
+    }
+    nav {
+      padding: 20px 0;
+      width: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 30%);
+      overflow-x: hidden;
+      transition: width 600ms ease;
+    }
+    nav.active {
+      width: 350px;
+    }
+
+    nav ul {
+      display: flex;
+      width: 0;
+      padding: 0;
+      margin: 0;
+      transition: width 0.6s linear;
+    }
+    nav.active ul {
+      width: 100%;
+    }
+    nav ul li {
+      transform: rotateY(360deg);
+      opacity: 0;
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    nav.active ul li {
+      transform: rotateY(0deg);
+      opacity: 1;
+    }
+    nav ul a {
+      position: relative;
+      color: #000;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    .icon {
+      border: 0;
+      background-color: rgba(255, 255, 255, 0);
+    }
+    .line {
+      height: 2px;
+      width: 20px;
+      background-color: #5290f9;
+      transform: rotate(0deg);
+      transition: all 0.6s linear;
+    }
+    .line.line1 {
+      transform: rotate(0deg) translateY(5px);
+    }
+    .line.line2 {
+      transform: rotate(0deg) translateY(-5px);
+    }
+    nav.active .line.line1 {
+      transform: rotate(750deg);
+    }
+    nav.active .line.line2 {
+      transform: rotate(-750deg);
+    }
+  </style>
+  <body>
+    <nav class="active" id="nav">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Works</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <button class="icon" id="toggle">
+        <div class="line line1"></div>
+        <div class="line line2"></div>
+      </button>
+    </nav>
+    <script>
+      const button = document.querySelector(".icon");
+      const navBar = document.querySelector("nav");
+      button.addEventListener("click", () => {
+        navBar.classList.toggle("active");
+      });
+    </script>
+
+    <!-- Dribbble link: https://dribbble.com/shots/2427219-Header-Navigation-Day-053-dailyui -->
+  </body>
+</html>

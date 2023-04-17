@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+      }
+      .page-header {
+        margin-bottom: 24px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .toggle {
+        visibility: hidden;
+      }
+      .content-box {
+        margin: 20px 0;
+        display: flex;
+        align-items: center;
+        width: 200px;
+      }
+      .label {
+        position: relative;
+        margin-right: 12px;
+        display: block;
+        width: 80px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #d0d0d0;
+      }
+      .ball {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background-color: #fff;
+        animation: off 0.3s linear;
+      }
+      .toggle:checked + .label {
+        background-color: #8e44ad;
+      }
+      .toggle:checked + .label .ball {
+        animation: on 0.3s linear forwards;
+      }
+      @keyframes on {
+        0% {
+          transform: translateX(0) scale(1);
+        }
+        50% {
+          transform: translateX(20px) scale(1.2);
+        }
+        100% {
+          transform: translateX(40px) scale(1);
+        }
+      }
+      @keyframes off {
+        0% {
+          transform: translateX(40px) scale(1);
+        }
+        50% {
+          transform: translateX(20px) scale(1.2);
+        }
+        100% {
+          transform: translateX(0px) scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="page-header">How do you want your project to be?</h1>
+    <div class="content">
+      <div class="content-box">
+        <input type="checkbox" class="toggle" id="good" />
+        <label for="good" class="label">
+          <div class="ball"></div>
+        </label>
+        <span>Good</span>
+      </div>
+      <div class="content-box">
+        <input type="checkbox" class="toggle" id="cheap" />
+        <label for="cheap" class="label">
+          <div class="ball"></div>
+        </label>
+        <span>Cheap</span>
+      </div>
+      <div class="content-box">
+        <input type="checkbox" class="toggle" id="fast" />
+        <label for="fast" class="label">
+          <div class="ball"></div>
+        </label>
+        <span>Fast</span>
+      </div>
+    </div>
+    <script>
+      const good = document.querySelector("#good");
+      const cheap = document.querySelector("#cheap");
+      const fast = document.querySelector("#fast");
+
+      const whichToTurnOff = (id) => {
+        if (id === "good") {
+          fast.checked = false;
+        }
+        if (id === "cheap") {
+          good.checked = false;
+        }
+        if (id === "fast") {
+          cheap.checked = false;
+        }
+      };
+
+      const changeSelect = (e) => {
+        const count = good.checked + cheap.checked + fast.checked;
+        console.log(e.target.id);
+        count === 3 ? whichToTurnOff(e.target.id) : "";
+      };
+
+      good.addEventListener("click", changeSelect);
+      cheap.addEventListener("click", changeSelect);
+      fast.addEventListener("click", changeSelect);
+    </script>
+  </body>
+</html>

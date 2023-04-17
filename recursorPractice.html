@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .letters {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .letters span {
+        display: inline-block;
+        font-size: 3em;
+        animation: jump 1s ease-in-out forwards;
+        animation-delay: calc(var(--i) * 100ms);
+      }
+
+      .letters span:nth-child(1) {
+        --i: 1;
+      }
+
+      .letters span:nth-child(2) {
+        --i: 2;
+      }
+
+      .letters span:nth-child(3) {
+        --i: 3;
+      }
+
+      .letters span:nth-child(4) {
+        --i: 4;
+      }
+
+      .letters span:nth-child(5) {
+        --i: 5;
+      }
+
+      .letters span:nth-child(6) {
+        --i: 6;
+      }
+
+      @keyframes jump {
+        0% {
+          transform: translateY(0);
+        }
+        25% {
+          transform: translateY(-50px);
+        }
+        50% {
+          transform: translateY(0);
+        }
+        75% {
+          transform: translateY(-25px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="letters">
+      <span>L</span>
+      <span>e</span>
+      <span>t</span>
+      <span>t</span>
+      <span>e</span>
+      <span>r</span>
+    </div>
+    <script>
+      //only for obj deepclone
+      let obj = {
+        name: "foo",
+        age: 18,
+        family: { father: "Barney", mother: "Apple" },
+      };
+      90;
+      let deepclone = (oldObj) => {
+        let newObj = Array.isArray(obj) ? [] : {};
+        for (const key in oldObj) {
+          if (typeof oldObj[key] === "object") {
+            newObj[key] = deepclone(oldObj[key]);
+          } else {
+            newObj[key] = oldObj[key];
+          }
+        }
+        return newObj;
+      };
+
+      let newObject = deepclone(obj);
+      obj.family.father = "alibaba";
+      console.log(newObject);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./global.css" />
+    <title>Document</title>
+    <style>
+      body,
+      .counter {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .counter {
+        transition: transform 0.3s ease;
+      }
+      .counter h4 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .counter span {
+        font-size: 48px;
+        color: darkturquoise;
+      }
+      .number {
+        position: relative;
+        margin-bottom: 10px;
+        height: 55px;
+        width: 250px;
+        overflow: hidden;
+      }
+      .number span {
+        position: absolute;
+        top: -5px;
+        left: 45%;
+        display: none;
+      }
+      .counter span.in {
+        display: block;
+        transform-origin: bottom center;
+        animation: rotateNum 1s forwards;
+      }
+      @keyframes rotateNum {
+        0% {
+          transform: rotate(90deg);
+        }
+        25% {
+          transform: rotate(-15deg);
+        }
+        40% {
+          transform: rotate(10deg);
+        }
+        50% {
+          transform: rotate(-5deg);
+        }
+        60%,
+        65% {
+          transform: rotate(0deg);
+        }
+        80% {
+          transform: rotate(15deg);
+        }
+        100% {
+          transform: rotate(-90deg);
+        }
+      }
+      .final {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        text-align: center;
+        display: none;
+        animation: jumpOut 0.3s forwards;
+      }
+      @keyframes jumpOut {
+        80% {
+          transform: translate(-50%, -50%) scale(1.2);
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+      .final h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .final .btn {
+        position: relative;
+        padding: 6px;
+        border: 0;
+        border-radius: 4px;
+        background-color: #3498db;
+        color: #fff;
+        cursor: pointer;
+        transition: padding 0.4s ease;
+      }
+      .final .btn:hover {
+        padding-right: 40px;
+      }
+      .final .btn span::after {
+        content: "\00bb";
+        position: absolute;
+        opacity: 1;
+        top: 4px;
+        right: -12px;
+        transition: all 0.8s ease;
+      }
+      .btn:hover span::after {
+        opacity: 1;
+        right: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="counter">
+      <div class="number">
+        <span>3</span>
+        <span>2</span>
+        <span>1</span>
+        <span>0</span>
+      </div>
+      <h4>GET READY</h4>
+    </div>
+    <div class="final">
+      <h2>GO</h2>
+      <button class="btn">
+        <span>Replay</span>
+      </button>
+    </div>
+    <script>
+      const numbers = document.querySelectorAll("span");
+      const numContainer = document.querySelector(".counter");
+      const playAgainContainer = document.querySelector(".final");
+      const replayBtn = document.querySelector(".btn");
+      let count = 0;
+      //number animation
+      const numAnimate = () => {
+        numbers.forEach((number) => number.classList.remove("in"));
+        numbers[count].classList.add("in");
+        count++;
+      };
+      numAnimate();
+      //number timer and shrink
+      const animation = () => {
+        const timeInterval = setInterval(() => {
+          if (count >= 4) {
+            clearInterval(timeInterval);
+            numContainer.style.transform = "scale(0)";
+            playAgainContainer.style.display = "block";
+          } else {
+            numAnimate();
+          }
+        }, 1000);
+      };
+      animation();
+      //replay
+      const resetDom = () => {
+        playAgainContainer.style.display = "none";
+        numContainer.style.transform = "scale(1)";
+        count = 0;
+        numAnimate();
+        animation();
+      };
+      replayBtn.addEventListener("click", resetDom);
+    </script>
+  </body>
+</html>
